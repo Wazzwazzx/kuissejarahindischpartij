@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kartu Kejutan | Aksen Sejarah (Copy)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c79d52;--gd:#8e6930;--ink:#2f241c;--fo:#3e5a4a;--ok:#46715b;--okb:#d9f2e7;--bad:#b94b3a;--badb:#f7d2cb;--paper:rgba(255,255,255,.6);--bd:rgba(125,97,56,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:Inter,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f6efe3,#efe0bf)}
+.shell{max-width:1100px;margin:0 auto;padding:22px 16px 40px}
+.hero,.panel{border-radius:26px;border:1px solid var(--bd);background:var(--paper);box-shadow:0 14px 30px rgba(73,54,36,.12)}
+.hero{padding:30px 28px}
+.eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(199,157,82,.15);color:var(--gd);font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+h1{font-family:Cinzel,serif;font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:14px 0 10px;letter-spacing:-.03em}
+h1 span{color:var(--gd)}
+.sub{margin:0 0 18px;line-height:1.7;max-width:620px;color:rgba(47,36,28,.8)}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge,.chip{padding:9px 14px;border-radius:14px;background:rgba(245,234,210,.85);border:1px solid var(--bd);font-size:.84rem;font-weight:600}
+.chip{background:rgba(63,91,73,.08);color:var(--fo);font-weight:700}
+.panel{margin-top:22px;padding:20px}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.ph b{font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:16px}
+.card{aspect-ratio:.82;border:0;border-radius:18px;cursor:pointer;font:800 1.2rem Inter,sans-serif;color:var(--gd);background:linear-gradient(135deg,#f6e4ba,#d9b165);box-shadow:inset 0 3px 8px rgba(255,255,255,.5),0 10px 18px rgba(115,87,52,.14);outline:1px dashed rgba(90,67,37,.4);outline-offset:-8px;transition:transform .2s}
+.card:hover:not(:disabled){transform:translateY(-6px)}
+.card:disabled{cursor:default;color:#fff}
+.card.seen{background:linear-gradient(180deg,#9b8a6c,#75654c);color:#fff}
+.result{display:none;margin-top:20px;padding:18px;border-radius:22px;background:rgba(247,241,227,.9);border:1px solid var(--bd)}
+.result.show{display:block}
+.btn{border:0;border-radius:14px;padding:13px 20px;font:700 .95rem Inter,sans-serif;cursor:pointer}
+.pri{background:linear-gradient(135deg,var(--gold),#efcb8d);color:#fffef8}
+.sec{background:rgba(255,255,255,.5);border:1px solid var(--bd);color:var(--ink)}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:50;background:rgba(27,20,17,.55);backdrop-filter:blur(6px);padding:14px}
+.modal.show{display:flex}
+.mc{width:min(660px,100%);max-height:100%;overflow:auto;border-radius:24px;padding:20px;background:linear-gradient(180deg,#fff,#f8ecd0);border:1px solid var(--bd)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tag{padding:7px 12px;border-radius:999px;background:rgba(199,157,82,.15);color:var(--gd);font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.x{width:40px;height:40px;border-radius:12px;border:1px solid var(--bd);background:rgba(255,255,255,.5);cursor:pointer;font-size:1.1rem}
+.q{margin:6px 0 14px;font-size:clamp(1.05rem,2.4vw,1.35rem);line-height:1.5;font-weight:700}
+.answer{margin:16px 0;padding:14px;border-radius:14px;background:var(--okb);border:1px solid var(--ok);font-weight:700;line-height:1.5}
+.fb{min-height:24px;margin:8px 0;font-weight:800}
+.acts{display:flex;justify-content:flex-end;gap:8px}
+.hide{display:none!important}
+footer{text-align:center;margin-top:26px;font-size:.82rem;opacity:.75}
+@media(max-width:760px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:480px){.grid{grid-template-columns:repeat(3,1fr)}.hero{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<section class="hero">
+<span class="eyebrow">🏛️ Game Sejarah Interaktif</span>
+<h1>Kartu <span>Kejutan</span>: Indische Partij</h1>
+<p class="sub">Pilih satu kartu, coba jawab pertanyaannya sendiri, lalu tekan “Lihat Jawaban”.</p>
+<div class="badges"><div class="badge">📜 36 Soal</div><div class="badge">💭 Jawab sendiri</div></div>
+</section>
+<section class="panel" id="board">
+<div class="ph"><b>🗂️ Papan Kartu Sejarah</b><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip" id="prog">0 / 36 dilihat</span></div></div>
+<div class="grid" id="grid"></div>
+<div class="result" id="result">
+<b>Semua kartu sudah dilihat!</b>
+<button class="btn pri" id="again">Main Lagi 🔄</button>
+</div>
+</section>
+<footer>© Copyright by Abia Syafiq Ijlal Fawwaz</footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+<div class="mc">
+<div class="top"><span class="tag" id="mtag">Kartu #1</span><button class="x" id="close" aria-label="Tutup">✕</button></div>
+<p class="q" id="qt"></p>
+<div class="answer hide" id="answer"></div>
+<div class="acts"><button class="btn pri" id="reveal">Lihat Jawaban</button><button class="btn sec hide" id="done">Tutup</button></div>
+</div>
+</div>
+
+<script>
+// [pertanyaan, [opsi 1, opsi 2, opsi 3, opsi 4, opsi 5], indeks jawaban benar]
+const Q=[
+["Gerakan apa yang dipelopori Indische Partij dalam perjuangan kemerdekaan Indonesia?",["Kooperatif","Non-kooperatif","Bersenjata","Dagang","Federal"],1],
+["Pada tahun berapa Indische Partij berdiri?",["1908","1911","1912","1913","1945"],2],
+["Apa bentuk organisasi Indische Partij?",["Organisasi keagamaan","Organisasi pemuda","Koperasi","Partai politik","Serikat dagang"],3],
+["Pihak mana yang melakukan penindasan dan diskriminasi sehingga mendorong berdirinya Indische Partij?",["Pemerintah kolonial Belanda","Pemerintah Jepang","Kerajaan Nusantara","Pemerintah Inggris","Pedagang asing"],0],
+["Berapa tokoh pendiri Indische Partij yang dikenal sebagai Tiga Serangkai?",["Satu","Dua","Empat","Lima","Tiga"],4],
+["Siapa tiga pendiri Indische Partij?",["Sukarno, Hatta, dan Sjahrir","Soetomo, Wahidin, dan Agus Salim","Douwes Dekker, Ki Hajar Dewantara, dan Dr. Tjipto Mangoenkoesoemo","Cokroaminoto, Douwes Dekker, dan Hatta","Ki Hajar Dewantara, Sukarno, dan Soetomo"],2],
+["Siapa salah satu tokoh pendiri Indische Partij?",["Sukarno","Mohammad Hatta","Ki Hajar Dewantara","Sutan Sjahrir","Agus Salim"],2],
+["Siapa pendiri Indische Partij yang bergelar “Dr.”?",["Douwes Dekker","Ki Hajar Dewantara","Mohammad Hatta","Dr. Tjipto Mangoenkoesoemo","Sukarno"],3],
+["Apa salah satu latar belakang berdirinya Indische Partij?",["Diskriminasi ras dan ketidakadilan","Pemerataan pendidikan","Kebebasan berpolitik","Bantuan ekonomi","Pembagian tanah"],0],
+["Dalam bidang apa saja hak masyarakat dibatasi pada masa itu?",["Olahraga, seni, dan budaya","Pertanian dan perikanan","Pelayaran dan militer","Agama dan adat","Pendidikan, ekonomi, sosial, dan politik"],4],
+["Apa tujuan menyatukan seluruh rakyat Hindia Belanda menurut infografik?",["Bekerja sama dengan penjajah","Melawan penjajahan","Memperluas wilayah dagang","Menjadi koloni baru","Memecah wilayah"],1],
+["Apa dorongan yang membuat rakyat Hindia Belanda ingin membentuk Indische Partij?",["Diskriminasi ras dan ketidakadilan","Terbatasnya hak masyarakat di berbagai bidang","Keinginan menyatukan rakyat Hindia Belanda","Ketidakadilan pemerintah kolonial","Keinginan menyatukan rakyat untuk melawan penjajahan"],4],
+["Apa ideologi Indische Partij?",["Komunisme","Liberalisme","Nasionalisme","Kapitalisme","Feodalisme"],2],
+["Apa yang diperjuangkan Indische Partij dari penjajahan Belanda?",["Otonomi daerah","Kemerdekaan","Subsidi","Perdagangan bebas","Penggabungan wilayah"],1],
+["Dua hal apa yang tidak dibedakan dalam persamaan hak yang diperjuangkan Indische Partij?",["Usia dan pekerjaan","Jenis kelamin dan tempat tinggal","Ras dan agama","Pendidikan dan kekayaan","Bahasa dan pakaian"],2],
+["Siapa yang ingin disatukan oleh Indische Partij?",["Bangsawan Jawa","Pedagang Eropa","Prajurit kolonial","Seluruh rakyat Hindia Belanda","Pejabat pemerintah"],3],
+["Apa tujuan Indische Partij dalam memperjuangkan persamaan hak?",["Memperjuangkan kemerdekaan","Mewujudkan persamaan hak","Menyatukan rakyat Hindia Belanda","Memperluas kekuasaan kolonial","Persamaan hak tanpa membedakan ras dan agama"],4],
+["Bagaimana tanggapan pemerintah kolonial Belanda terhadap Indische Partij?",["Dukungan penuh","Bantuan dana","Penolakan dan tekanan","Penghargaan","Jabatan resmi"],2],
+["Mengapa pemerintah kolonial menganggap Indische Partij berbahaya?",["Menguasai perdagangan","Memiliki pasukan besar","Bekerja sama dengan negara asing","Menolak membayar pajak","Menyebarkan semangat perlawanan terhadap penjajahan"],4],
+["Pada tanggal berapa Indische Partij dibubarkan?",["4 Maret 1913","25 Desember 1912","17 Agustus 1945","20 Mei 1908","28 Oktober 1928"],0],
+["Pada tahun berapa Indische Partij dibubarkan?",["1912","1913","1914","1920","1928"],1],
+["Apa yang terjadi pada para pendiri Indische Partij setelah pembubaran?",["Dihukum mati","Menjadi pejabat Belanda","Dibebaskan tanpa syarat","Diasingkan ke Belanda","Pindah ke Jepang"],3],
+["Apa judul tulisan Ki Hajar Dewantara yang menjadi salah satu pemicu pembubaran Indische Partij?",["Indonesia Menggugat","Habis Gelap Terbitlah Terang","Als ik een Nederlander was","Max Havelaar","Di Bawah Bendera Revolusi"],2],
+["Siapa penulis “Als ik een Nederlander was”?",["Douwes Dekker","Dr. Tjipto Mangoenkoesoemo","Sukarno","Mohammad Hatta","Ki Hajar Dewantara"],4],
+["Apa yang dikritik Ki Hajar Dewantara dalam tulisan “Als ik een Nederlander was”?",["Ketidakadilan pemerintah kolonial Belanda","Sistem pendidikan pribumi","Kerajaan-kerajaan Nusantara","Para pedagang Tionghoa","Pemerintah Jepang"],0],
+["Peristiwa apa yang dipicu oleh tulisan “Als ik een Nederlander was”?",["Berdirinya Budi Utomo","Pembubaran Indische Partij","Sumpah Pemuda","Proklamasi kemerdekaan","Berdirinya VOC"],1],
+["Apa yang dibangkitkan Indische Partij di kalangan rakyat?",["Rasa pasrah","Sikap apatis","Kesadaran nasionalisme","Politik adu domba","Kepatuhan pada kolonial"],2],
+["Bagi organisasi pergerakan nasional berikutnya, Indische Partij menjadi apa?",["Pesaing utama","Penghalang","Sumber konflik","Inspirasi","Penguasa"],3],
+["Perjuangan menuju apa yang didukung oleh Indische Partij?",["Pembentukan negara serikat","Kembalinya kerajaan","Penyatuan dengan Malaya","Kolonialisme baru","Kemerdekaan Indonesia"],4],
+["Bagaimana Indische Partij berkontribusi pada persatuan rakyat?",["Membangkitkan kesadaran nasionalisme","Menginspirasi organisasi pergerakan berikutnya","Menjadi fondasi perjuangan kemerdekaan","Memperkuat persatuan rakyat","Menghentikan pergerakan nasional"],3],
+["Persatuan lintas apa yang dibuktikan dapat terwujud oleh Indische Partij?",["Ras","Profesi","Usia","Wilayah dagang","Tingkat pendidikan"],0],
+["Untuk mencapai apa persatuan lintas ras diperjuangkan?",["Kekuasaan dan jabatan","Keadilan dan kemerdekaan","Kekayaan dan perdagangan","Perluasan wilayah","Kerja sama dengan Belanda"],1],
+["Ideologi apa yang menjadi dasar perjuangan Indische Partij?",["Kapitalisme","Liberalisme","Komunisme","Nasionalisme","Feodalisme"],3],
+["Bagi siapa Indische Partij memperjuangkan persamaan hak?",["Hanya bangsa Eropa","Hanya kaum bangsawan","Seluruh rakyat tanpa membedakan ras dan agama","Hanya kaum pedagang","Hanya penduduk Jawa"],2],
+["Bagaimana urutan waktu berdiri dan dibubarkannya Indische Partij?",["Dibubarkan 1912, berdiri 1913","Berdiri 1912, dibubarkan 1913","Berdiri 1913, dibubarkan 1914","Berdiri 1908, dibubarkan 1912","Berdiri 1912, dibubarkan 1945"],1],
+["Siapa tokoh ketiga pendiri Indische Partij selain Douwes Dekker dan Ki Hajar Dewantara?",["Sukarno","Dr. Soetomo","Mohammad Hatta","Dr. Tjipto Mangoenkoesoemo","Sutan Sjahrir"],3]
+];
+const $=id=>document.getElementById(id);
+let st,cur,order;
+function reset(){st={seen:{}};order=Q.map((_,i)=>i);for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}$("result").classList.remove("show");render();upd()}
+function render(){const g=$("grid");g.innerHTML="";Q.forEach((_,i)=>{const b=document.createElement("button");b.className="card";b.textContent=i+1;b.setAttribute("aria-label","Buka kartu "+(i+1));if(st.seen[i]){b.disabled=true;b.classList.add("seen")}b.onclick=()=>open(i);g.appendChild(b)})}
+function upd(){const n=Object.keys(st.seen).length;$("prog").textContent=n+" / "+Q.length+" dilihat";if(n===Q.length)$("result").classList.add("show")}
+function open(i){cur=i;const q=Q[order[i]];$("mtag").textContent="Kartu #"+(i+1);$("qt").textContent=q[0];$("answer").textContent="";$("answer").classList.add("hide");$("reveal").classList.remove("hide");$("done").classList.add("hide");$("modal").classList.add("show")}
+function reveal(){const q=Q[order[cur]];$("answer").textContent=q[1][q[2]];$("answer").classList.remove("hide");$("reveal").classList.add("hide");$("done").classList.remove("hide");st.seen[cur]=true;render();upd()}
+function close(){$("modal").classList.remove("show")}
+$("close").onclick=close;$("done").onclick=close;$("reveal").onclick=reveal;$("again").onclick=reset;
+$("modal").onclick=e=>{if(e.target===$("modal"))close()};
+reset();
+</script>
+</body>
+</html>
